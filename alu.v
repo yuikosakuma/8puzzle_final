@@ -1,9 +1,12 @@
 module alu(in0, in1, op, zf, out);
 
-	input wire [16:0] in0, in1;
+	input wire [3:0] in0;
+    input wire [35:0] in1;
 	input wire [3:0] op;
 	output reg zf;
 	output reg [16:0] out;
+    output reg [3:0] ou0;
+    output reg [35:0] ou1;
 `include "def.h"
 `include "register.h"
 
@@ -106,68 +109,92 @@ always @(*) begin
 */
 
 		TO_UP : begin
-			if(in1 == TEMP_3_ADDR)begin
-					out <= TEMP_0_ADDR;
-			end else if (in1 == TEMP_4_ADDR)begin
-					out <= TEMP_1_ADDR;
-			end else if (in1 == TEMP_5_ADDR)begin
-					out <= TEMP_2_ADDR;
-			end else if(in1 == TEMP_6_ADDR)begin
-					out <= TEMP_3_ADDR;
-			end else if(in1 == TEMP_7_ADDR)begin
-					out <= TEMP_4_ADDR;
-			end else if(in1 == TEMP_8_ADDR)begin 
-					out <= TEMP_5_ADDR;
+			if(in0 == 0011)begin
+                    ou0 <= in1[23:20], in1[31:28], in1[27:24], in1[35:32], in1[19:16], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0000
+			end else if (in0 == 0100)begin
+                    ou0 <= in1[35:32], in1[19:16], in1[27:24], in1[23:20], in1[31:28], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0001
+			end else if (in0 == 0101)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[15:12], in1[23:20], in1[19:16], in1[27:24], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0010
+			end else if(in0 == 0110)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[11:8], in1[19:16], in1[15:12], in1[23:20], in1[7:4], in1[3:0];
+                    ou1 <= 0010
+			end else if(in0 == 0111)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[7:4], in1[15:12], in1[11:8], in1[19:16], in1[3:0];
+                    ou1 <= 0011
+			end else if(in0 == 1000)begin 
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[19:16], in1[3:0], in1[11:8], in1[7:4], in1[15:12];
+                    ou1 <= 0100
 			end
 			zf <= 0;
 		end
 		TO_DOWN : begin
-			if(in1 == TEMP_0_ADDR)begin
-					out <= TEMP_3_ADDR;
-			end else if (in1 == TEMP_1_ADDR)begin
-					out <= TEMP_4_ADDR;
-			end else if (in1 == TEMP_2_ADDR)begin
-					out <= TEMP_5_ADDR;
-			end else if(in1 == TEMP_3_ADDR)begin
-					out <= TEMP_6_ADDR;
-			end else if(in1 == TEMP_4_ADDR)begin
-					out <= TEMP_7_ADDR;
-			end else if(in1 == TEMP_5_ADDR)begin 
-					out <= TEMP_8_ADDR;
+			if(in0 == 0000)begin
+                    ou0 <= in1[23:20], in1[31:28], in1[27:24], in1[35:32], in1[19:16], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0011
+			end else if (in0 == 0001)begin
+                    ou0 <= in1[35:32], in1[19:16], in1[27:24], in1[23:20], in1[31:28], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0100
+			end else if (in0 == 0010)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[15:12], in1[23:20], in1[19:16], in1[27:24], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0101
+			end else if(in0 == 0011)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[11:8], in1[19:16], in1[15:12], in1[23:20], in1[7:4], in1[3:0];
+                    ou1 <= 0110
+			end else if(in0 == 0100)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[7:4], in1[15:12], in1[11:8], in1[19:16], in1[3:0];
+                    ou1 <= 0111
+			end else if(in0 == 0101)begin 
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[19:16], in1[3:0], in1[11:8], in1[7:4], in1[15:12];
+                    ou1 <= 1000
 			end
 			zf <= 0;
 		end
 
-		TO_RIGHT : begin
-			if(in1 == TEMP_0_ADDR)begin
-					out <= TEMP_1_ADDR;
-			end else if (in1 == TEMP_1_ADDR)begin
-					out <= TEMP_2_ADDR;
-			end else if (in1 == TEMP_3_ADDR)begin
-					out <= TEMP_4_ADDR;
-			end else if(in1 == TEMP_4_ADDR)begin
-					out <= TEMP_5_ADDR;
-			end else if(in1 == TEMP_6_ADDR)begin
-					out <= TEMP_7_ADDR;
-			end else if(in1 == TEMP_7_ADDR)begin 
-					out <= TEMP_8_ADDR;
+		to_right : begin
+			if(in0 == 0000)begin
+                    ou0 <= in1[31:28], in1[35:32], in1[27:24], in1[23:20], in1[19:16], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0001
+			end else if (in0 == 0001)begin
+                    ou0 <= in1[35:32], in1[27:24], in1[31:28], in1[23:20], in1[19:16], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0010
+			end else if (in0 == 0011)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[19:16], in1[23:20], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0100
+			end else if(in0 == 0100)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[15:12], in1[19:16], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0101
+			end else if(in0 == 0110)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[19:16], in1[15:12], in1[7:4], in1[11:8], in1[3:0];
+                    ou1 <= 0111
+			end else if(in0 == 0111)begin 
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[19:16], in1[15:12], in1[11:8], in1[3:0], in1[11:8];
+                    ou1 <= 1000
 			end
 			zf <= 0;
 		end
 		
 		TO_LEFT : begin
-			if(in1 == TEMP_1_ADDR)begin
-					out <= TEMP_0_ADDR;
-			end else if (in1 == TEMP_2_ADDR)begin
-					out <= TEMP_1_ADDR;
-			end else if (in1 == TEMP_4_ADDR)begin
-					out <= TEMP_3_ADDR;
-			end else if(in1 == TEMP_5_ADDR)begin
-					out <= TEMP_4_ADDR;
-			end else if(in1 == TEMP_7_ADDR)begin
-					out <= TEMP_6_ADDR;
-			end else if(in1 == TEMP_8_ADDR)begin 
-					out <= TEMP_7_ADDR;
+			if(in0 == 0001)begin
+                    ou0 <= in1[31:28], in1[35:32], in1[27:24], in1[23:20], in1[19:16], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0000
+			end else if (in0 == 0010)begin
+                    ou0 <= in1[35:32], in1[27:24], in1[31:28], in1[23:20], in1[19:16], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0001
+			end else if (in0 == 0100)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[19:16], in1[23:20], in1[15:12], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0011
+			end else if(in0 == 0101)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[15:12], in1[19:16], in1[11:8], in1[7:4], in1[3:0];
+                    ou1 <= 0100
+			end else if(in0 == 0111)begin
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[19:16], in1[15:12], in1[7:4], in1[11:8], in1[3:0];
+                    ou1 <= 0110
+			end else if(in0 == 1000)begin 
+                    ou0 <= in1[35:32], in1[31:28], in1[27:24], in1[23:20], in1[19:16], in1[15:12], in1[11:8], in1[3:0], in1[11:8];
+                    ou1 <= 0111
 			end
 			zf <= 0;
 		end

@@ -11,7 +11,8 @@ module register (src0, src1, dst, we, data, clk, rst_n, data0, data1);
 	parameter [35:0] INIT = 36'b0001_0010_0011_0100_0101_0000_0111_1000_0110, 
 					IDEAL = 36'b0001_0010_0011_0100_0101_0110_0111_1000_0000;
 	parameter[3:0] DEPTH = 4'b0000;
-    parameter[29:0] DIRECTION = 30'b00_00_00_00_00_00_00_00_00_00_00_00_00_00_00;,
+    parameter[29:0] DIRECTION = 30'b00_00_00_00_00_00_00_00_00_00_00_00_00_00_00;
+    parameter[3:0] FLAG = 4'b0101;
 
 always @(posedge clk) begin
 	if (!rst_n) begin
@@ -21,9 +22,10 @@ always @(posedge clk) begin
 		regis[2] <= 0;
 		regis[3] <= DEPTH;
 		regis[4] <= DIRECTION;
-		regis[5] <= 0;
+		regis[5] <= FLAG;
 		regis[6] <= 0;
 		regis[7] <= 0;
+		regis[8] <= 0;
 	end else begin
 		if (we) begin
 			regis[dst] <= data;
