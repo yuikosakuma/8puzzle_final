@@ -31,17 +31,24 @@ parameter [3:0]
 	JMP = 4'he,
 	JNZ = 4'hf;
 
-//	ZERO = 4'b0000;
-
+//DEPTH max 15
 parameter[2:0]
-	ZERO = 3'b000,
-	FIRST = 3'b001,
-	SECOND = 3'b010,
-	THIRD = 3'b011,
-	FOURTH = 3'b100,
-	FIFTH = 3'b101,
-	SIXTH = 3'b110,
-	SEVENTH = 3'b111;
+	ZERO = 4'b0000,
+	FIRST = 4'b0001,
+	SECOND = 4'b0010,
+	THIRD = 4'b0011,
+	FOURTH = 4'b0100,
+	FIFTH = 4'b0101,
+	SIXTH = 4'b0110,
+	SEVENTH = 4'b0111;
+	EIGHTH = 4'b1000;
+	NINETH = 4'b1001;
+	TENTH = 4'b1010;
+	ELEVENTH = 4'b1011;
+	TWELVETH = 4'b1100;
+	THIRTEENTH = 4'b1101;
+	FOURTEENTH = 4'b1110;
+	FIFTEENTH = 4'b1111;
 
 parameter[1:0]
 	UP = 2'b00,

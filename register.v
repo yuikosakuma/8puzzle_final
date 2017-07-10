@@ -6,21 +6,26 @@ module register (src0, src1, dst, we, data, clk, rst_n, data0, data1);
 	input wire [7:0] data;
 	output wire [7:0] data0, data1;
 
-	reg [7:0] regis [35:0];
+	reg [7:0] regis [39:0];
 
+//info about puzzle
 	parameter [39:0] INIT = 40'b0101_0101_0001_0010_0011_0100_0101_0000_0111_1000_0110, 
 					IDEAL = 40'b1000_1000_0001_0010_0011_0100_0101_0110_0111_1000_0000;
-	parameter[3:0] DEPTH = 4'b0000;
-    parameter[29:0] DIRECTION = 30'b00_00_00_00_00_00_00_00_00_00_00_00_00_00_00;
+					TEMP = 40'b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000;
+          
+//info about slide          
+//DEPTH for 4bit, direction for 0 t0 29bit
+	//parameter[3:0] DEPTH = 4'b0000;
+    parameter[33:0] DIRECTION = 34'b0000_00_00_00_00_00_00_00_00_00_00_00_00_00_00_00;
 
 always @(posedge clk) begin
 	if (!rst_n) begin
 	//initial condition
 		regis[0] <= INIT;
 		regis[1] <= IDEAL;
-		regis[2] <= 0;
-		regis[3] <= DEPTH;
-		regis[4] <= DIRECTION;
+		regis[2] <= TEMP;
+		regis[3] <= DIRECTION;
+		regis[4] <= 0;//TEMP_DIRECTION
 		regis[5] <= 0;
 		regis[6] <= 0;
 		regis[7] <= 0;
