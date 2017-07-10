@@ -32,8 +32,8 @@ parameter [3:0]
 	JNZ = 4'hf;
 
 //DEPTH max 15
-parameter[2:0]
-	ZERO = 4'b0000,
+parameter[3:0]
+  ZERO = 4'b0000,
 	FIRST = 4'b0001,
 	SECOND = 4'b0010,
 	THIRD = 4'b0011,

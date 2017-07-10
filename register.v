@@ -3,12 +3,13 @@ module register (src0, src1, dst, we, data, clk, rst_n, data0, data1);
 	input wire [4:0] src0, src1;//[3:0]?
 	input wire [4:0] dst;
 	input wire we;
-	input wire [7:0] data;
-	output wire [7:0] data0, data1;
+	input wire [39:0] data;
+	output wire [39:0] data0, data1;
 
-	reg [7:0] regis [39:0];
+	reg [39:0] regis [8:0];
 
 //info about puzzle
+//where is 0 for 1st 4bit
 	parameter [39:0] INIT = 40'b0101_0101_0001_0010_0011_0100_0101_0000_0111_1000_0110, 
 					IDEAL = 40'b1000_1000_0001_0010_0011_0100_0101_0110_0111_1000_0000;
 					TEMP = 40'b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000;

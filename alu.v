@@ -56,9 +56,11 @@ always @(*) begin
 			out <= {3'b000, in1[13:0]};
 			zf <= 0;
 		end
+
 		COMP : begin
 			zf <= (in0 == in1) ? 1:0;
 		end
+
 		//check 2bit
 		CHECK : begin
 			zf <= (in0[16:15] == in1[16:15]) ? 1:0;
@@ -69,6 +71,15 @@ always @(*) begin
 			zf <= (in0[3:0] == in1[33:30]) ? 1:0;
 		end
 		//making flag
+    POSSIBLE_UP : begin
+      zf <= (in0[39:36] == THIRD|FOURTH|FIFTH|SIXTH|SEVENTH|EIGHTH) ? 1:0;
+
+    POSSIBLE_DOWN 
+      zf <= (in0[39:36] == ZERO|FIRST|SECOND|THIRD|FOURTH|FIFTH) ? 1:0;
+    POSSIBLE_RIGHT : begin
+      zf <= (in0[39:36] == ZERO|FIRST|THIRD|FOURTH|SIXTH|SEVENTH) ? 1:0;
+    POSSIBLE_LEFT : begin
+      zf <= (in0[39:36] == ONE|SECOND|FOURTH|FIFTH|SEVENTH|EIGHTH) ? 1:0;
 
 		REFERENCE : begin
 			case(in1[33:30])
@@ -101,29 +112,6 @@ always @(*) begin
 				SIXTH: out <= {in1[11:10], 15'b000_00_00_00_00_00_00};
 				SEVENTH: out <= {in1[13:12], 15'b000_00_00_00_00_00_00};
 			endcase
-			zf <= 0;
-		end
-*/
-/*
-		TO_UP : begin
-			if(in1 == TEMP_3_ADDR)begin
-					TEMP_3_ADDR <= TEMP_0_ADDER;
-			end else if (in1 == TEMP_4_ADDR)begin
-					TEMP_4_ADDR <= TEMP_1_ADDER;
-					TEMP_1_ADDR <= {ZERO, 1'b0};
-			end else if (in1 == TEMP_5_ADDR)begin
-					TEMP_5_ADDR <= TEMP_2_ADDER;
-					TEMP_2_ADDR <= {ZERO, 1'b0};
-			end else if(in1 == TEMP_6_ADDR)begin
-					TEMP_6_ADDR <= TEMP_3_ADDER;
-					TEMP_3_ADDR <= {ZERO, 1'b0};
-			end else if(in1 == TEMP_7_ADDR)begin
-					TEMP_7_ADDR <= TEMP_4_ADDER;
-					TEMP_4_ADDR <= {ZERO, 1'b0};
-			end else if(in1 == TEMP_8_ADDR)begin 
-					TEMP_8_ADDR <= TEMP_5_ADDER;
-					TEMP_5_ADDR <= {ZERO, 1'b0};
-			end
 			zf <= 0;
 		end
 */
