@@ -17,7 +17,7 @@ module test;
 	#150
 		rst_n = 1;
 //	#100000000
-	#1000
+	#10000
 	$finish;
 	end
 endmodule
