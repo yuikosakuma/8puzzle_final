@@ -1,8 +1,8 @@
 module pc(pc_in, pc_out, rst_n, clk, we);
 	input rst_n, clk, we;
-	input [7:0] pc_in;
-	output[7:0] pc_out;
-	reg[7:0] pc_out;
+	input [5:0] pc_in;
+	output[5:0] pc_out;
+	reg[5:0] pc_out;
 
 	always @(posedge clk or posedge rst_n) begin
 		if (!rst_n) begin
