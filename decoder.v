@@ -3,7 +3,7 @@ module decoder(op, zf, pc_in, pc_we, src0, src1, dst, reg_we, sel1, sel2, data, 
 	input wire zf;
 	output reg [5:0] pc_in;
 	output reg pc_we;
-	output reg [4:0] src0, src1, dst;//[3:0]?
+	output reg [3:0] src0, src1, dst;//[3:0]?
 	output reg reg_we;
 	output reg sel1, sel2;
 	output reg [39:0] data;//7?
@@ -13,7 +13,7 @@ module decoder(op, zf, pc_in, pc_we, src0, src1, dst, reg_we, sel1, sel2, data, 
 `include "def.h"
 
 always @(*) begin
-	case (op[15:12])
+	case (op[15:11])
 	JMP : begin
 		alu_op <= op[15:11];
 		dst <= 0;
@@ -40,6 +40,7 @@ always @(*) begin
 		data <= 0;
 		mem_we <= 0;
 	end
+
 	INC : begin
 		alu_op <= op[15:11];
 		dst <= op[10:7];
@@ -54,6 +55,19 @@ always @(*) begin
 		mem_we <= 0;
 	end
 
+	INC_DEPTH : begin
+		alu_op <= op[15:11];
+		dst <= op[10:7];
+		src1 <= op[6:3];
+		src0 <= 0;
+		pc_in <= 0;
+		pc_we <= 0; //1?
+		reg_we <= 1;
+		sel1 <= 0;
+		sel2 <= 0;
+		data <= 0;
+		mem_we <= 0;
+	end
 	COPY : begin
 		alu_op <= op[15:11];
 		dst <= op[10:7];
@@ -61,10 +75,11 @@ always @(*) begin
 		src0 <= 0;
 		pc_in <= 0;
 		pc_we <= 0;
-		reg_we <= 1;
+		reg_we <= 1; //1?
 		sel1 <= 1;//1??
 		sel2 <= 0;
-		data <= op[1:0];
+		//data <= op[1:0];
+		data <= 0;
 		mem_we <= 0;
 	end
 
@@ -73,12 +88,13 @@ always @(*) begin
 		dst <= 0;
 		src1 <= op[7:4];
 		src0 <= op[3:0];
+//		src0 <= 0;
 		pc_in <= 0;
-		pc_we <= 0;//zf
+		pc_we <= zf;//zf
 		reg_we <= 0;
-		sel1 <= 1;
+		sel1 <= 1;//1
 		sel2 <= 0;
-//		data <= op[6:0];
+//		data <= op[3:0];
 		data <= 0;
 		mem_we <= 0;
 	end
@@ -92,9 +108,9 @@ always @(*) begin
 		pc_in <= 0;
 		pc_we <= zf;
 		reg_we <= 0;
-		sel1 <= 0;
+		sel1 <= 0; //1
 		sel2 <= 0;
-		data <= {op[1:0], 15'b00000_00000_00000};
+		data <= op[1:0];
 //		data <= {op[6:0], 10b'00000_00000};
 		mem_we <= 0;
 	end
@@ -102,14 +118,16 @@ always @(*) begin
 	CHECK_4 : begin
 		alu_op <= op[15:11];
 		dst <= 0;
+		//src1 <= 0;
+		//src0 <= op[10:7];//[6:0]
 		src1 <= op[10:7];
 		src0 <= 0;//[6:0]
 		pc_in <= 0;
-		pc_we <= 0;
+		pc_we <= zf;
 		reg_we <= 0;
 		sel1 <= 0;
 		sel2 <= 0;
-		data <= op[6:3];
+		data <= {op[6:3], 30'b00000_00000_00000_00000_00000};
 		mem_we <= 0;
 	end
 
@@ -135,8 +153,8 @@ always @(*) begin
 		pc_in <= 0;
 		pc_we <= 0;
 		reg_we <= 1;
-		sel1 <= 0; //1???
-		sel2 <= 1; //0???
+		sel1 <= 1; //1???
+		sel2 <= 0; //0???
 		data <= 0;
 		mem_we <= 0;
 	end
@@ -149,8 +167,8 @@ always @(*) begin
 		pc_in <= 0;
 		pc_we <= 0;
 		reg_we <= 1;
-		sel1 <= 0; //1???
-		sel2 <= 1; //0???
+		sel1 <= 1; //1???
+		sel2 <= 0; //0???
 		data <= 0;
 		mem_we <= 0;
 	end
@@ -163,8 +181,8 @@ always @(*) begin
 		pc_in <= 0;
 		pc_we <= 0;
 		reg_we <= 1;
-		sel1 <= 0; //1???
-		sel2 <= 1; //0???
+		sel1 <= 1; //1???
+		sel2 <= 0; //0???
 		data <= 0;
 	end
 
@@ -176,8 +194,8 @@ always @(*) begin
 		pc_in <= 0;
 		pc_we <= 0;
 		reg_we <= 1;
-		sel1 <= 0; //1???
-		sel2 <= 1; //0???
+		sel1 <= 1; //1???
+		sel2 <= 0; //0???
 		data <= 0;
 		mem_we <= 0;
 		mem_we <= 0;
@@ -186,13 +204,13 @@ always @(*) begin
 	POSSIBLE_UP : begin
 		alu_op <= op[15:11];
 		dst <= 0;
-		src1 <= op[3:0];
-		src0 <= 0;
+		src1 <= 0;
+		src0 <= op[3:0];
 		pc_in <= 0;
-		pc_we <= 0;
-		reg_we <= 1;
-		sel1 <= 0; //1???
-		sel2 <= 1; //0???
+		pc_we <= zf;
+		reg_we <= 0;
+		sel1 <= 1; //1???
+		sel2 <= 0; //0???
 		data <= 0;
 		mem_we <= 0;
 		mem_we <= 0;
@@ -201,13 +219,13 @@ always @(*) begin
 	POSSIBLE_DOWN : begin
 		alu_op <= op[15:11];
 		dst <= 0;
-		src1 <= op[3:0];
-		src0 <= 0;
+		src1 <= 0;
+		src0 <= op[3:0];
 		pc_in <= 0;
-		pc_we <= 0;
-		reg_we <= 1;
-		sel1 <= 0; //1???
-		sel2 <= 1; //0???
+		pc_we <= zf;
+		reg_we <= 0;
+		sel1 <= 1; //1???
+		sel2 <= 0; //0???
 		data <= 0;
 		mem_we <= 0;
 		mem_we <= 0;
@@ -216,13 +234,13 @@ always @(*) begin
 	POSSIBLE_RIGHT : begin
 		alu_op <= op[15:11];
 		dst <= 0;
-		src1 <= op[3:0];
-		src0 <= 0;
+		src1 <= 0;
+		src0 <= op[3:0];
 		pc_in <= 0;
-		pc_we <= 0;
-		reg_we <= 1;
-		sel1 <= 0; //1???
-		sel2 <= 1; //0???
+		pc_we <= zf;
+		reg_we <= 0;
+		sel1 <= 1; //1???
+		sel2 <= 0; //0???
 		data <= 0;
 		mem_we <= 0;
 		mem_we <= 0;
@@ -231,13 +249,13 @@ always @(*) begin
 	POSSIBLE_LEFT : begin
 		alu_op <= op[15:11];
 		dst <= 0;
-		src1 <= op[3:0];
-		src0 <= 0;
+		src1 <= 0;
+		src0 <= op[3:0];
 		pc_in <= 0;
-		pc_we <= 0;
-		reg_we <= 1;
-		sel1 <= 0; //1???
-		sel2 <= 1; //0???
+		pc_we <= zf;
+		reg_we <= 0;
+		sel1 <= 1; //1???
+		sel2 <= 0; //0???
 		data <= 0;
 		mem_we <= 0;
 		mem_we <= 0;
@@ -258,6 +276,19 @@ always @(*) begin
 		mem_we <= 0;
 	end
 
+	INIT_DEPTH : begin
+		alu_op <= op[15:11];
+		dst <= op[10:7];
+		src1 <= op[6:3];
+		src0 <= 0;
+		pc_in <= 0;
+		pc_we <= 0;
+		reg_we <= 1;
+		sel1 <= 1;//1??
+		sel2 <= 0;
+		data <= 0;
+		mem_we <= 0;
+	end
 
 	STORE : begin
 		alu_op <= op[15:11];

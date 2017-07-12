@@ -15,10 +15,11 @@ parameter[4:0]
 	POSSIBLE_RIGHT = 5'b01101,
 	POSSIBLE_LEFT = 5'b01110,
 	WHERE_ZERO = 5'b01111,
-	STORE = 5'b10000,
-	LI = 5'b10001,
-	JMP = 5'b10010,
-	JNZ = 5'b10011;
+	INIT_DEPTH = 5'b10000,
+	STORE = 5'b10001,
+	LI = 5'b10010,
+	JMP = 5'b10011,
+	JNZ = 5'b10100;
 
 //DEPTH max 15
 parameter[3:0]

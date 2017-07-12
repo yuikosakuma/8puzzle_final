@@ -1,7 +1,7 @@
 module register (src0, src1, dst, we, data, clk, rst_n, data0, data1);
 	input wire clk, rst_n;
-	input wire [4:0] src0, src1;//[3:0]?
-	input wire [4:0] dst;
+	input wire [3:0] src0, src1;//[3:0]?
+	input wire [3:0] dst;
 	input wire we;
 	input wire [39:0] data;
 	output wire [39:0] data0, data1;

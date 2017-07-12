@@ -8,8 +8,8 @@ module top(clk, rst_n);
 	input wire [15:0] op;
 
 	//decoder
-	input wire [4:0] dst;
-	input wire [4:0] src0, src1;
+	input wire [3:0] dst;
+	input wire [3:0] src0, src1;
 	input wire [39:0] dec_data;
 
 	//alu
