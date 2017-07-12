@@ -1,12 +1,17 @@
-module register (src0, src1, dst, we, data, clk, rst_n, data0, data1);
+module register (src0, src1, dst, we, data, clk, rst_n, data0, data1, comp, ord);
 	input wire clk, rst_n;
 	input wire [3:0] src0, src1;//[3:0]?
 	input wire [3:0] dst;
 	input wire we;
 	input wire [39:0] data;
 	output wire [39:0] data0, data1;
+	//for seg
+	output wire comp;
+	output wire [33:0] ord;
 
 	reg [39:0] regis [8:0];
+
+`include "def.h"
 
 //info about puzzle
 //where is 0 for 1st 4bit
@@ -42,7 +47,9 @@ end
 assign data0 = regis[src0];
 assign data1 = regis[src1];
 
-
+//io
+assign comp = (regis[REG_BRD]== DEF_CLR)? 1:0;
+assign ord = regis[REG_ORD];
 endmodule
 
 

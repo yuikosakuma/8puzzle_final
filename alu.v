@@ -55,14 +55,41 @@ always @(*) begin
 			end
 			//zf <= (in0[39:36] == THIRD|FOURTH|FIFTH|SIXTH|SEVENTH|EIGHTH) ? 1:0;
 		end
+	
 		POSSIBLE_DOWN : begin
-			zf <= (in0[39:36] == ZERO|FIRST|SECOND|THIRD|FOURTH|FIFTH) ? 1:0;
+			if(in0[39:36] == ZERO)begin zf <= 1;
+			end else if (in0[39:36] == FIRST)begin zf <= 1;
+			end else if (in0[39:36] == SECOND)begin zf <= 1;
+			end else if (in0[39:36] == THIRD)begin zf <= 1;
+			end else if (in0[39:36] == FOURTH)begin zf <= 1;
+			end else if (in0[39:36] == FIFTH)begin zf <= 1;
+			end else begin zf <= 0;
+			end
+			//zf <= (in0[39:36] == ZERO|FIRST|SECOND|THIRD|FOURTH|FIFTH) ? 1:0;
 		end
+		
 		POSSIBLE_RIGHT : begin
-			zf <= (in0[39:36] == ZERO|FIRST|THIRD|FOURTH|SIXTH|SEVENTH) ? 1:0;
+			if(in0[39:36] == ZERO)begin zf <= 1;
+			end else if (in0[39:36] == FIRST)begin zf <= 1;
+			end else if (in0[39:36] == THIRD)begin zf <= 1;
+			end else if (in0[39:36] == FOURTH)begin zf <= 1;
+			end else if (in0[39:36] == SIXTH)begin zf <= 1;
+			end else if (in0[39:36] == SEVENTH)begin zf <= 1;
+			end else begin zf <= 0;
+			end
+			//zf <= (in0[39:36] == ZERO|FIRST|THIRD|FOURTH|SIXTH|SEVENTH) ? 1:0;
 		end
+
 		POSSIBLE_LEFT : begin
-			zf <= (in0[39:36] == FIRST|SECOND|FOURTH|FIFTH|SEVENTH|EIGHTH) ? 1:0;
+			if(in0[39:36] == FIRST)begin zf <= 1;
+			end else if (in0[39:36] == SECOND)begin zf <= 1;
+			end else if (in0[39:36] == FOURTH)begin zf <= 1;
+			end else if (in0[39:36] == FIFTH)begin zf <= 1;
+			end else if (in0[39:36] == SEVENTH)begin zf <= 1;
+			end else if (in0[39:36] == EIGHTH)begin zf <= 1;
+			end else begin zf <= 0;
+			end
+			//zf <= (in0[39:36] == FIRST|SECOND|FOURTH|FIFTH|SEVENTH|EIGHTH) ? 1:0;
 		end
 
 		REFERENCE : begin
