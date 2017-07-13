@@ -234,6 +234,7 @@ WHERE_ZERO : begin
 			out <= in0;
 			zf <= 0;
 		end
+
 		LI : begin
 			out <= in0;
 			zf <= 0;

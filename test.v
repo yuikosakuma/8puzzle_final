@@ -2,8 +2,10 @@
 
 module test;
 	reg clk, rst_n;
+	reg [4:0]btn;
+	wire[6:0]seg0, seg1, seg2, seg3;
 
-	top top0(clk, rst_n);
+	top top0(clk, rst_n, btn, seg0, seg1, seg2, seg3);
 
 	always #50 clk = ~clk;
 

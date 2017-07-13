@@ -1,27 +1,22 @@
-module io(comp, cnt, ord, btn, seg, clk, rst_n);
-// 初期の盤面は別途与えられるので初期状態入力の機構は用意していません
+//module io(comp, cnt, ord, btn, seg, clk, rst_n);
+module io(comp, ord, btn, seg0, seg1, seg2, seg3, clk, rst_n);
 
-	input comp;            // 経路の探索が終了したかどうかのフラグ
-	input [33:0] ord;      // 手数と移動方向をレジスタから受け取る
-	input btn; 　           // 押すと0、離すと1が伝わる
-	output reg [6:0] seg0;  // LEDの点灯を管理
-	output reg [6:0] seg1;  // LEDの点灯を管理
-	output reg [6:0] seg2;  // LEDの点灯を管理
-	output reg [6:0] seg3;  // LEDの点灯を管理
+	input comp;
+	input [33:0] ord;
+	input btn;
+	output reg [6:0] seg0;
+	output reg [6:0] seg1;
+	output reg [6:0] seg2;
+	output reg [6:0] seg3;
 	input clk, rst_n;
 
-	reg [6:0] buff [3:0];  // LEDで表示する内容を保持
-	// 3:移動方向の左側文字 2:移動方向の右側文字 1:手数の10の位 0:手数の1の位
-//	reg [3:0] count;       // LEDに表示する情報を示す // 1クロックごとに1文字表示
-	reg [3:0] btn_flag;    // ボタン入力回数を保持する
-	reg [4:0] sort_num;     // ord のどこの手を提示するかを示す
+	reg [6:0] buff [3:0];
+//	reg [3:0] count;
+	reg [3:0] btn_flag;
+	reg [4:0] sort_num;
 
 `include "def.h"
-// このコードで使っているparameter: UP,DOWN,RIGHT,LEFT
-
-　　　　// アクティブ点灯方式(1ならば点灯?)
-　　　　// 7セグなので7bit(コンマをあらわすLEDは無い想定)
-　　　　// 各数字や文字とLED点灯箇所との関連づけ
+	
 	parameter[6:0]
 		SEG_U = 7'b0111110,
 		SEG_P = 7'b1100111,
@@ -41,21 +36,27 @@ module io(comp, cnt, ord, btn, seg, clk, rst_n);
 		SEG_8 = 7'b1111111,
 		SEG_9 = 7'b1111011,
 		SEG_0 = 7'b1111110,
-		SEG_NONE = 7'b0000000; // 点灯なし
+		SEG_NONE = 7'b0000000;
 
 	always @(posedge clk) begin
 		if(!rst_n) begin
-			seg <= 7'b0;
-			count <= 4'b0;
-			btn_flag <= 4'b1;
-			sort_num <= 5'b0;
-		end else begin // LEDに信号を送ります
+			//seg <= 7'b0000000;
+			//count <= 4'b0000;
+			btn_flag <= 4'b0001;
+			sort_num <= 5'b00000;
+		end else begin
 //			assign seg <= buff[count];
 //			count　<= count + 1;
+/*
 			assign seg0 <= buff[0];
 			assign seg1 <= buff[1];
 			assign seg2 <= buff[2];
 			assign seg3 <= buff[3];
+*/
+			seg0 <= buff[0];
+			seg1 <= buff[1];
+			seg2 <= buff[2];
+			seg3 <= buff[3];
 		end
 	end
 
@@ -66,7 +67,8 @@ module io(comp, cnt, ord, btn, seg, clk, rst_n);
 
 	always @(*) begin
 		if(comp) begin
-			case (ord[sort_num+1:sort_num])
+			//case (ord[sort_num+1'b1:sort_num])
+			case ((ord & (34'b11 << {sort_num,1'b0})) >> {sort_num,1'b0})
 			UP : begin
 				buff[3] = SEG_U;
 				buff[2] = SEG_P;
@@ -159,8 +161,8 @@ module io(comp, cnt, ord, btn, seg, clk, rst_n);
 			end
 			endcase
 		end else begin
-			buff[1] = SEG_none;
-			buff[0] = SEG_none;
+			buff[1] = SEG_NONE;
+			buff[0] = SEG_NONE;
 		end
 	end
 endmodule
