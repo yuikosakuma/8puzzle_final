@@ -9,13 +9,16 @@ module register (src0, src1, dst, we, data, clk, rst_n, data0, data1, comp, ord)
 	output wire comp;
 	output wire [33:0] ord;
 
-	reg [39:0] regis [8:0];
+	reg [39:0] regis [15:0];
 
 `include "def.h"
+`include "register.h"
 
 //info about puzzle
 //where is 0 for 1st 4bit
-	parameter [39:0] INIT = 40'b0101_0001_0010_0011_0100_0101_0000_0111_1000_0110,
+	//parameter [39:0] INIT = 40'b0101_0001_0010_0011_0100_0101_0000_0111_1000_0110,
+	//parameter [39:0] INIT = 40'b0000_0000_0101_0010_0001_0100_0011_0111_1000_0110,
+	parameter [39:0] INIT = 40'b0100_0001_0010_0011_0100_0000_0101_0111_1000_0110,
 					IDEAL = 40'b1000_0001_0010_0011_0100_0101_0110_0111_1000_0000,
 					TEMP = 40'b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000;
           
@@ -48,8 +51,9 @@ assign data0 = regis[src0];
 assign data1 = regis[src1];
 
 //io
-assign comp = (regis[REG_BRD]== DEF_CLR)? 1:0;
-assign ord = regis[REG_ORD];
+assign comp = (regis[TEMP_ADDR] == IDEAL)? 1:0;//flag if solved
+assign ord = regis[DIRECTION_ADDR];//keep depth and direction
+
 endmodule
 
 

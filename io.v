@@ -47,12 +47,6 @@ module io(comp, ord, btn, seg0, seg1, seg2, seg3, clk, rst_n);
 		end else begin
 //			assign seg <= buff[count];
 //			count　<= count + 1;
-/*
-			assign seg0 <= buff[0];
-			assign seg1 <= buff[1];
-			assign seg2 <= buff[2];
-			assign seg3 <= buff[3];
-*/
 			seg0 <= buff[0];
 			seg1 <= buff[1];
 			seg2 <= buff[2];

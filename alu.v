@@ -17,13 +17,7 @@ always @(*) begin
 			out<= {in1[33:30] +4'b0001, 30'b00_00_00_00_00_00_00_00_00_00_00_00_00_00_00}+{4'b0000, in1[29:0]};
 			zf <= 0;
 		end
-/*
-		INC_3 : begin
-//			out[16:14] <= in1[16:14] + 1;
-			out<= {in1[16:14] +3'b001, 14'b00_00_00_00_00_00_00}+{3'b000, in1[13:0]};
-			zf <= 0;
-		end
-*/
+		
 		COPY : begin
 			out <= in1;
 			zf <= 0;
@@ -112,44 +106,8 @@ always @(*) begin
 			endcase
 			zf <= 0;
 		end
-/*
-		REFERENCE : begin
-			case(in1[16:14])
-				FIRST: out <= {in1[1:0], 15'b000_00_00_00_00_00_00};
-				SECOND: out <= {in1[3:2], 15'b000_00_00_00_00_00_00};
-				THIRD: out <= {in1[5:4], 15'b000_00_00_00_00_00_00};
-				FOURTH: out <= {in1[7:6], 15'b000_00_00_00_00_00_00};
-				FIFTH: out <= {in1[9:8], 15'b000_00_00_00_00_00_00};
-				SIXTH: out <= {in1[11:10], 15'b000_00_00_00_00_00_00};
-				SEVENTH: out <= {in1[13:12], 15'b000_00_00_00_00_00_00};
-			endcase
-			zf <= 0;
-		end
-*/
-/*
-WHERE_ZERO : begin
-			if(in1[39:36] == 0000)begin
-                    out <= {4'b0000, in1[35:0]};
-			end else if (in1[39:36] == 0001)begin
-                    out <= {4'b0001, in1[35:0]};
-			end else if (in1[39:36] == 0010)begin
-                    out <= {4'b0010, in1[35:0]};
-			end else if(in1[39:36] == 0011)begin
-                    out <= {4'b0011, in1[35:0]};
-			end else if(in1[39:36] == 0100)begin
-                    out <= {4'b0100, in1[35:0]};
-			end else if(in1[39:36] == 0101)begin
-                    out <= {4'b0101, in1[35:0]};
-			end else if(in1[39:36] == 0110)begin
-                    out <= {4'b0110, in1[35:0]};
-			end else if(in1[39:36] == 0111)begin
-                    out <= {4'b0111, in1[35:0]};
-			end else if(in1[39:36] == 1000)begin
-                    out <= {4'b1000, in1[35:0]};
-			end
-			zf <= 0;
-		end
-*/
+		
+		
 		TO_UP : begin
 			if(in1[39:36] == 4'b0011)begin
                     out <= {4'b0000, in1[23:20], in1[31:28], in1[27:24], in1[35:32], in1[19:16], in1[15:12], in1[11:8], in1[7:4], in1[3:0]};

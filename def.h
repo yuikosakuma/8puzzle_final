@@ -46,11 +46,3 @@ parameter[1:0]
 	RIGHT = 2'b10,
 	LEFT = 2'b11;
 
-//REG
-parameter[3:0]REG_NULL = 4'h0,
-				REG_BRD = 4'h1,
-				REG_ORD = 4'h2,
-				REG_CNT = 4'h3,
-				REG_MVD = 4'h4,
-				REG_ADDR_ORD = 4'h5,
-				REG_ADDR_CNT = 4'h6;

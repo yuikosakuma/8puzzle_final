@@ -266,15 +266,6 @@ always@(pc) begin
 		op[5:0] <= TO_FIN;
 	end
 
-//======OVERWRITE_DIRECTION=====
-/*//overwrite direction(up, down, right, left)
-	39 : begin
-		op[15:11] <= INC;
-		op[10:7] <= DIRECTION_ADDR;
-		op[6:3] <= DIRECTION_ADDR;
-		op[2:0] <= 3'bx;
-	end
-*/
 //overwrite depth
 	39 : begin
 		op[15:11] <= INC_DEPTH;
@@ -295,12 +286,7 @@ always@(pc) begin
 		op[6:3] <= DIRECTION_ADDR;
 		op[2:0] <= 2'bx;
 	end
-/*	122 : begin
-		op[15:12] <- JMP;
-		op[11:7] <= 4'bx;
-		op[6:0] <= TO_FIN;
-	end
-*/
+	
 	endcase
 end
 
