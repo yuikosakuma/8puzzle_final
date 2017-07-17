@@ -3,10 +3,10 @@ module top(mclk, rst_n, btn, seg0, seg1, seg2, seg3);
 	//seg
 	//input [4:0] btn;
 	input btn;
-	output [6:0] seg0;
-	output [6:0] seg1;
-	output [6:0] seg2;
-	output [6:0] seg3;
+	output [11:0] seg0;
+	output [11:0] seg1;
+	output [11:0] seg2;
+	output [11:0] seg3;
 
 	//divider
 	wire clk;

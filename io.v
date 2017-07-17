@@ -4,38 +4,39 @@ module io(comp, ord, btn, seg0, seg1, seg2, seg3, clk, rst_n);
 	input comp;
 	input [33:0] ord;
 	input btn;
-	output reg [6:0] seg0;
-	output reg [6:0] seg1;
-	output reg [6:0] seg2;
-	output reg [6:0] seg3;
+	output reg [11:0] seg0;
+	output reg [11:0] seg1;
+	output reg [11:0] seg2;
+	output reg [11:0] seg3;
 	input clk, rst_n;
 
-	reg [6:0] buff [3:0];
+	reg [11:0] buff [3:0];
 //	reg [3:0] count;
 	reg [3:0] btn_flag;
 	reg [4:0] sort_num;
 
 `include "def.h"
 	
-	parameter[6:0]
-		SEG_U = 7'b0111110,
-		SEG_P = 7'b1100111,
-		SEG_D = 7'b0111101,
-		SEG_O = 7'b0011101,
-		SEG_L = 7'b1110111,
-		SEG_E = 7'b0110000,
-		SEG_R = 7'b0001110,
-		SEG_I = 7'b1001111,
-		SEG_1 = 7'b0110000,
-		SEG_2 = 7'b1101101,
-		SEG_3 = 7'b1111001,
-		SEG_4 = 7'b0110011,
-		SEG_5 = 7'b1011011,
-		SEG_6 = 7'b1011111,
-		SEG_7 = 7'b1110000,
-		SEG_8 = 7'b1111111,
-		SEG_9 = 7'b1111011,
-		SEG_0 = 7'b1111110,
+	parameter[11:0]
+
+		SEG_U = 12'b1110_1_1000001,
+		SEG_P = 12'b1110_1_0001100,
+		SEG_D = 12'b1110_1_0100001,
+		SEG_O = 12'b1110_1_0100011,
+		SEG_L = 12'b1110_1_1000111,
+		SEG_E = 12'b1110_1_0000110,
+		SEG_R = 12'b1110_1_0001000,
+		SEG_I = 12'b1110_1_1111001,
+		SEG_0 = 12'b1110_1_1000000,
+		SEG_1 = 12'b1110_1_1111001,
+		SEG_2 = 12'b1110_1_0100100,
+		SEG_3 = 12'b1110_1_0110000,
+		SEG_4 = 12'b1110_1_0011001,
+		SEG_5 = 12'b1110_1_0010010,
+		SEG_6 = 12'b1110_1_0000010,
+		SEG_7 = 12'b1110_1_1011000,
+		SEG_8 = 12'b1110_1_0000000,
+		SEG_9 = 12'b1110_1_0010000,
 		SEG_NONE = 7'b0000000;
 
 	always @(posedge clk) begin
@@ -56,8 +57,8 @@ module io(comp, ord, btn, seg0, seg1, seg2, seg3, clk, rst_n);
 
 	always @(posedge btn) begin
 		btn_flag <= btn_flag + 1;
-		//sort_num <= 2*(btn_flag-1);
-		sort_num <= 2*(btn_flag);
+		sort_num <= 2*(btn_flag-1);
+		//sort_num <= 2*(btn_flag);
 	end
 
 	always @(*) begin
