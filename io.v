@@ -56,13 +56,14 @@ module io(comp, ord, btn, seg0, seg1, seg2, seg3, clk, rst_n);
 
 	always @(posedge btn) begin
 		btn_flag <= btn_flag + 1;
-		sort_num <= 2*(btn_flag-1);
+		//sort_num <= 2*(btn_flag-1);
+		sort_num <= 2*(btn_flag);
 	end
 
 	always @(*) begin
 		if(comp) begin
-			//case (ord[sort_num+1'b1:sort_num])
-			case ((ord & (34'b11 << {sort_num,1'b0})) >> {sort_num,1'b0})
+			//case ((ord & (34'b11 << {sort_num,1'b0})) >> {sort_num,1'b0})
+			case ((ord & (34'b11 << sort_num)) >> sort_num)
 			UP : begin
 				buff[3] = SEG_U;
 				buff[2] = SEG_P;

@@ -1,7 +1,8 @@
 module top(mclk, rst_n, btn, seg0, seg1, seg2, seg3);
 	input mclk, rst_n;
 	//seg
-	input [4:0] btn;
+	//input [4:0] btn;
+	input btn;
 	output [6:0] seg0;
 	output [6:0] seg1;
 	output [6:0] seg2;
@@ -101,7 +102,7 @@ zf zf0(.clk(clk), .rst_n(rst_n), .zf_in(zf), .zf_out(zf_out));
 decoder dec1(.op(op), .zf(zf_out), .pc_in(pc_in), .pc_we(pc_we), .src0(src0), .src1(src1), .dst(dst), .reg_we(reg_we), .sel1(sel1), .sel2(sel2), .data(dec_data), .alu_op(alu_op), .mem_we(mem_we));
 
 //io
-io io0(.comp(comp), .ord(ord), .seg0(seg0),  .seg1(seg1),  .seg2(seg2), .seg3(seg3), .clk(clk), .rst_n(rst_n));
+io io0(.comp(comp), .ord(ord), .btn(btn), .seg0(seg0),  .seg1(seg1),  .seg2(seg2), .seg3(seg3), .clk(clk), .rst_n(rst_n));
 endmodule
 
 
