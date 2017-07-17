@@ -16,7 +16,8 @@ parameter [7:0] TO_INIT = 0,
 				TO_SLIDE_RIGHT = 33,
 				TO_SLIDE_LEFT = 35,
 				TO_CHECKER = 37,
-				TO_FIN = 41;
+				TO_FIN = 41,
+				TO_WAIT = 43;
 
 always@(pc) begin
 	case (pc)
@@ -285,6 +286,16 @@ always@(pc) begin
 		op[10:7] <= TEMP_DIRECTION_ADDR;
 		op[6:3] <= DIRECTION_ADDR;
 		op[2:0] <= 2'bx;
+	end
+	42 : begin
+		op[15:11] <= JMP;
+		op[10:6] <= 5'bx;
+		op[6:0] <= TO_WAIT;
+	end
+	43 : begin
+		op[15:11] <= JMP;
+		op[10:6] <= 5'bx;
+		op[6:0] <= TO_WAIT;
 	end
 	
 	endcase
