@@ -3,7 +3,7 @@
 module test;
 	reg clk, rst_n;
 	reg btn;
-	wire[11:0]seg0, seg1, seg2, seg3;
+	wire[6:0]seg0, seg1, seg2, seg3;
 
 	top top0(clk, rst_n, btn, seg0, seg1, seg2, seg3);
 
@@ -20,7 +20,7 @@ module test;
 	#150
 		rst_n <= 1;
 //	#100000000
-	#62880000
+	#22000000
 	//#105000
 	btn <= 1;
 	#1000
