@@ -11,6 +11,7 @@ module io(comp, ord, btn, seg0, seg1, seg2, seg3, clk, rst_n);
 	input clk, rst_n;
 
 	reg [11:0] buff [3:0];
+	reg bt1, bt2;
 //	reg [3:0] count;
 	reg [3:0] btn_flag;
 	reg [4:0] sort_num;
@@ -43,7 +44,7 @@ module io(comp, ord, btn, seg0, seg1, seg2, seg3, clk, rst_n);
 		if(!rst_n) begin
 			//seg <= 7'b0000000;
 			//count <= 4'b0000;
-			btn_flag <= 4'b0001;
+			btn_flag <= 4'b0000;
 			sort_num <= 5'b00000;
 		end else begin
 //			assign seg <= buff[count];
@@ -52,18 +53,22 @@ module io(comp, ord, btn, seg0, seg1, seg2, seg3, clk, rst_n);
 			seg1 <= buff[1];
 			seg2 <= buff[2];
 			seg3 <= buff[3];
+			bt1 <= btn;
+			bt2 <= bt1;
+		end
+		
+		if (bt1 & ~bt2) begin
+			if (btn_flag == ord[33:30]) begin
+				btn_flag <= 4'b0000;
+				sort_num <= 2*btn_flag;
+			end else begin
+				btn_flag <= btn_flag + 1;
+				sort_num <= 2*(btn_flag + 1);
+			end
 		end
 	end
-
-	always @(posedge btn) begin
-		btn_flag <= btn_flag + 1;
-		sort_num <= 2*(btn_flag-1);
-		//sort_num <= 2*(btn_flag);
-	end
-
 	always @(*) begin
 		if(comp) begin
-			//case ((ord & (34'b11 << {sort_num,1'b0})) >> {sort_num,1'b0})
 			case ((ord & (34'b11 << sort_num)) >> sort_num)
 			UP : begin
 				buff[3] = SEG_U;
@@ -93,67 +98,67 @@ module io(comp, ord, btn, seg0, seg1, seg2, seg3, clk, rst_n);
 			case (btn_flag)
 			0 : begin
 				buff[1] = SEG_0;
-				buff[0] = SEG_0;
+				buff[0] = SEG_1;
 			end
 			1 : begin
 				buff[1] = SEG_0;
-				buff[0] = SEG_1;
+				buff[0] = SEG_2;
 			end
 			2 : begin
 				buff[1] = SEG_0;
-				buff[0] = SEG_2;
+				buff[0] = SEG_3;
 			end
 			3 : begin
 				buff[1] = SEG_0;
-				buff[0] = SEG_3;
+				buff[0] = SEG_4;
 			end
 			4 : begin
 				buff[1] = SEG_0;
-				buff[0] = SEG_4;
+				buff[0] = SEG_5;
 			end
 			5 : begin
 				buff[1] = SEG_0;
-				buff[0] = SEG_5;
+				buff[0] = SEG_6;
 			end
 			6 : begin
 				buff[1] = SEG_0;
-				buff[0] = SEG_6;
-			end
-			7 : begin
-				buff[1] = SEG_0;
 				buff[0] = SEG_7;
 			end
-			8 : begin
+			7 : begin
 				buff[1] = SEG_0;
 				buff[0] = SEG_8;
 			end
-			9 : begin
+			8 : begin
 				buff[1] = SEG_0;
 				buff[0] = SEG_9;
 			end
-			10 : begin
+			9 : begin
 				buff[1] = SEG_1;
 				buff[0] = SEG_0;
 			end
-			11 : begin
+			10 : begin
 				buff[1] = SEG_1;
 				buff[0] = SEG_1;
 			end
-			7 : begin
+			11 : begin
 				buff[1] = SEG_1;
 				buff[0] = SEG_2;
 			end
-			13 : begin
+			12 : begin
 				buff[1] = SEG_1;
 				buff[0] = SEG_3;
 			end
-			14 : begin
+			13 : begin
 				buff[1] = SEG_1;
 				buff[0] = SEG_4;
 			end
-			15 : begin
+			14 : begin
 				buff[1] = SEG_1;
 				buff[0] = SEG_5;
+			end
+			15 : begin
+				buff[1] = SEG_1;
+				buff[0] = SEG_6;
 			end
 			endcase
 		end else begin
